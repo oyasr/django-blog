@@ -8,6 +8,12 @@ def post_list(request: HttpRequest):
     return render(request, "blog/post/list.html", {"posts": posts})
 
 
-def post_detail(request: HttpRequest, id: int):
-    post = get_object_or_404(Post, id=id, status=Post.Status.PUBLISHED)
+def post_detail(request: HttpRequest, year: int, month: int, day: int, slug: str):
+    post = get_object_or_404(
+        Post.published,
+        slug=slug,
+        publish__year=year,
+        publish__month=month,
+        publish__day=day,
+    )
     return render(request, "blog/post/detail.html", {"post": post})
